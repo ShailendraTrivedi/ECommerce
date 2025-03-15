@@ -31,20 +31,6 @@ public class CategoryController {
         }
     }
 
-    @GetMapping("{categoryId}")
-    public ResponseEntity<ResponseDTO<CategoryDTO>> getCategory(@PathVariable Long categoryId){
-        ResponseDTO<CategoryDTO> category =  categoryService.getCategory(categoryId);
-        try {
-            if(category.getSuccess()){
-                return ResponseEntity.status(HttpStatus.OK).body(category);
-            } else{
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(category);
-            }
-        } catch (Exception e){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(category);
-        }
-    }
-
     @PostMapping("/all")
     public ResponseEntity<ResponseDTO<List<CategoryDTO>>> addAllCategories(@RequestBody List<String> categories){
         ResponseDTO<List<CategoryDTO>> isAdded = categoryService.addAllCategories(categories);
@@ -59,7 +45,35 @@ public class CategoryController {
         }
     }
 
-    @PostMapping()
+    @DeleteMapping("/all")
+    public ResponseEntity<ResponseDTO<String>> deleteAllCategory(){
+        ResponseDTO<String> isDeleted = categoryService.deleteAllCategory();
+        try {
+            if(isDeleted.getSuccess()){
+                return ResponseEntity.status(HttpStatus.OK).body(isDeleted);
+            } else{
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(isDeleted);
+            }
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(isDeleted);
+        }
+    }
+
+    @GetMapping("{categoryId}")
+    public ResponseEntity<ResponseDTO<CategoryDTO>> getCategory(@PathVariable Long categoryId){
+        ResponseDTO<CategoryDTO> category =  categoryService.getCategory(categoryId);
+        try {
+            if(category.getSuccess()){
+                return ResponseEntity.status(HttpStatus.OK).body(category);
+            } else{
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(category);
+            }
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(category);
+        }
+    }
+
+    @PostMapping
     public ResponseEntity<ResponseDTO<CategoryDTO>> addCategory(@RequestBody CategoryDTO category){
         ResponseDTO<CategoryDTO> isAdded = categoryService.addCategory(category);
         try {
@@ -77,20 +91,6 @@ public class CategoryController {
     @DeleteMapping("/{categoryId}")
     public ResponseEntity<ResponseDTO<String>> deleteByCategoryId(@PathVariable  Long categoryId){
         ResponseDTO<String> isDeleted = categoryService.deleteByCategoryId(categoryId);
-        try {
-            if(isDeleted.getSuccess()){
-                return ResponseEntity.status(HttpStatus.OK).body(isDeleted);
-            } else{
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(isDeleted);
-            }
-        } catch (Exception e){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(isDeleted);
-        }
-    }
-
-    @DeleteMapping("/all")
-    public ResponseEntity<ResponseDTO<String>> deleteAllCategory(){
-        ResponseDTO<String> isDeleted = categoryService.deleteAllCategory();
         try {
             if(isDeleted.getSuccess()){
                 return ResponseEntity.status(HttpStatus.OK).body(isDeleted);
