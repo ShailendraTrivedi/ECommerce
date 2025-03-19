@@ -30,13 +30,10 @@ public class CategoryService extends CategoryServiceAbstract implements Category
 
     @Override
     public ResponseDTO<CategoryDTO> getCategory(Long categoryId) {
-        if (!categoryRepository.existsById(categoryId)) {
-            return new ResponseDTO<>(false, "Category with ID " + categoryId + " not found.", null);
-        }
         try {
             CategoryModel category = categoryRepository.findById(categoryId).orElse(null);
             if (category == null) {
-                return new ResponseDTO<>(false, "No categories found.", null);
+                return new ResponseDTO<>(false, "Category with ID " + categoryId + " not found.", null);
             }
             return new ResponseDTO<>(true, "Categories retrieved successfully.", convertToDTO(category));
         } catch (Exception e){
