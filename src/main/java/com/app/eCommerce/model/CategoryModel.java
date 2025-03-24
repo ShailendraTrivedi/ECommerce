@@ -7,7 +7,10 @@ import java.util.*;
 @Entity
 @Table(name = "categories")
 @Data
-@NoArgsConstructor
+//@Getter
+//@Setter
+//@AllArgsConstructor
+//@NoArgsConstructor
 public class CategoryModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

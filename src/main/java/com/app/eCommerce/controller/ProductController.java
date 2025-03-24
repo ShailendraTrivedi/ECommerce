@@ -33,7 +33,7 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ResponseDTO<ProductDTO>> getProduct(@PathVariable Long id) {
+    public ResponseEntity<ResponseDTO<ProductDTO>> getProduct(@PathVariable Long id) throws Exception {
         ResponseDTO<ProductDTO> responseDTO = productService.getProduct(id);
         try {
             if (responseDTO.getSuccess()) {

@@ -1,17 +1,21 @@
 package com.app.eCommerce.service.product;
 
+import com.app.eCommerce.model.ProductModel;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.app.eCommerce.dto.ProductDTO;
 import com.app.eCommerce.dto.ResponseDTO;
 import com.app.eCommerce.model.CategoryModel;
-import com.app.eCommerce.model.ProductModel;
+//import com.app.eCommerce.model.ProductModel;
 import com.app.eCommerce.repository.CategoryRepository;
 import com.app.eCommerce.repository.ProductRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService extends ProductServiceAbstract implements ProductServiceInterface {
@@ -20,6 +24,9 @@ public class ProductService extends ProductServiceAbstract implements ProductSer
 
     @Autowired
     private ProductRepository productRepository;
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
     public ResponseDTO<List<ProductDTO>> getAllProducts(){
@@ -35,16 +42,22 @@ public class ProductService extends ProductServiceAbstract implements ProductSer
     }
 
     @Override
-    public ResponseDTO<ProductDTO> getProduct(Long productId) {
+    public ResponseDTO<ProductDTO> getProduct(Long productId) throws Exception {
+        System.out.println("id "+productId);
         try {
+            entityManager.clear();
 //            List<ProductModel> productModels = productRepository.findAll();
-            ProductModel productModel = productRepository.findById(productId).orElse(null);
+            Optional<ProductModel> productModel = productRepository.findById(productId);
+
+
+            System.out.println("skjxbjsc "+productModel);
             if (productModel == null) {
                 return new ResponseDTO<>(false, "Product not found.", null);
             }
-            return new ResponseDTO<>(true, "Product found.", convertToDTO(productModel));
+            return new ResponseDTO<>(true, "Product found.", convertToDTO(new ProductModel()));
         } catch (Exception e) {
-            return new ResponseDTO<>(false, "System error occurred while fetching the product.", null);
+//            return new ResponseDTO<>(false, "System error occurred while fetching the product.", null);
+            throw new Exception(e);
         }
     }
 

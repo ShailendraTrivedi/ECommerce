@@ -1,11 +1,17 @@
 package com.app.eCommerce.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
 @Table(name = "products")
 @Data
+//@Getter
+//@Setter
+//@AllArgsConstructor
+//@NoArgsConstructor
+////@ToString
 public class ProductModel {
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
@@ -18,7 +24,8 @@ public class ProductModel {
     private Double price;
 
     @ManyToOne
-    @JoinColumn(name = "category_id", nullable = false)
+//    @JsonIgnore
+    @JoinColumn(name = "category_id")
     private CategoryModel category;
 }
 
